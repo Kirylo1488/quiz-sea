@@ -92,3 +92,22 @@
             }
         }
 
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                correctAnswers++;
+            }
+            questionIndex++;
+            setTimeout(loadQuestion, 500);
+        }
+
+        function showStats() {
+            statsElement.innerHTML = `Ви дали ${correctAnswers} правильних відповідей із ${questions.length}.`;
+            startContainer.style.display = "block";
+            quizContainer.style.display = "none";
+        }
+
+        startButton.addEventListener("click", startQuiz);
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
