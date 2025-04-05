@@ -108,4 +108,3 @@ document.addEventListener("click", (event) => {
         checkAnswer(event);
     }
 });
-
