@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>вікторина: Відомості про океан</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <style>
+        /* Делаем текст вопроса жирным, белым с черным контуром */
+        #question {
+            font-weight: bold;
+            font-size: 20px;
+            color: white;
+            text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+        }
+
+        /* Эффект всплывания кнопок при наведении */
+        .btn:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Стиль для ответов (черный фон, белый текст) */
+        .btn {
+            background-color: green;
+            color: white;
+            border: 2px solid white;
+            padding: 10px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h3 id="stats"></h3>
+
+    <div class="container">
+        <div class="start-container">
+            <h1 class="h1"> Відомості про океан</h1>
+            <button class="btn" id="startButton">Почати</button>
+            <h3 id="stats"></h3>
+        </div>
+
+        <div class="quiz-container" id="quizContainer">
+            <div id="question"></div>
+            <div id="answers"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Логика викторины
+        let questions = [
+            { question: "Який океан є найбільший у світі?", options: ["Атлантичний океан", "Індійський океан", "Тихий океан", "Південний океан"], correct: "Тихий океан" },
+            { question: "Яка середня глибина Тихого океану?", options: ["4000 м", "6000 м", "8000 м", "10000 м"], correct: "4000 м" },
+            { question: "Який океан наймолодший?", options: ["Тихий океан", "Атлантичний океан", "Індійський океан", "Південний океан"], correct: "Південний океан" }
+        ];
+
+        let questionIndex = 0;
+        let correctAnswers = 0;
+        const startButton = document.getElementById("startButton");
+        const quizContainer = document.getElementById("quizContainer");
+        const startContainer = document.querySelector(".start-container");
+        const questionElement = document.getElementById("question");
+        const answersElement = document.getElementById("answers");
+        const statsElement = document.getElementById("stats");
+
+        function startQuiz() {
+            questionIndex = 0;
+            correctAnswers = 0;
+            startContainer.style.display = "none";
+            quizContainer.style.display = "block";
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (questionIndex < questions.length) {
+                let currentQuestion = questions[questionIndex];
+                questionElement.innerHTML = currentQuestion.question;
+                answersElement.innerHTML = "";
+                currentQuestion.options.forEach(option => {
+                    let btn = document.createElement("button");
+                    btn.classList.add("btn");
+                    btn.innerText = option;
+                    btn.onclick = () => checkAnswer(option, currentQuestion.correct);
+                    answersElement.appendChild(btn);
+                });
+            } else {
+                showStats();
+            }
+        }
+
+        function checkAnswer(selected, correct) {
+            if (selected === correct) {
+                correctAnswers++;
+            }
+            questionIndex++;
+            setTimeout(loadQuestion, 500);
+        }
+
+        function showStats() {
+            statsElement.innerHTML = `Ви дали ${correctAnswers} правильних відповідей із ${questions.length}.`;
+            startContainer.style.display = "block";
+            quizContainer.style.display = "none";
+        }
+
+        startButton.addEventListener("click", startQuiz);
+    </script>
+</body>
+</html>
