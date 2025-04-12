@@ -49,65 +49,6 @@
             <div id="answers"></div>
         </div>
     </div>
-    
-    <script>
-        // Логика викторины
-        let questions = [
-            { question: "Який океан є найбільший у світі?", options: ["Атлантичний океан", "Індійський океан", "Тихий океан", "Південний океан"], correct: "Тихий океан" },
-            { question: "Яка середня глибина Тихого океану?", options: ["4000 м", "6000 м", "8000 м", "10000 м"], correct: "4000 м" },
-            { question: "Який океан наймолодший?", options: ["Тихий океан", "Атлантичний океан", "Індійський океан", "Південний океан"], correct: "Південний океан" }
-        ];
-
-        let questionIndex = 0;
-        let correctAnswers = 0;
-        const startButton = document.getElementById("startButton");
-        const quizContainer = document.getElementById("quizContainer");
-        const startContainer = document.querySelector(".start-container");
-        const questionElement = document.getElementById("question");
-        const answersElement = document.getElementById("answers");
-        const statsElement = document.getElementById("stats");
-
-        function startQuiz() {
-            questionIndex = 0;
-            correctAnswers = 0;
-            startContainer.style.display = "none";
-            quizContainer.style.display = "block";
-            loadQuestion();
-        }
-
-        function loadQuestion() {
-            if (questionIndex < questions.length) {
-                let currentQuestion = questions[questionIndex];
-                questionElement.innerHTML = currentQuestion.question;
-                answersElement.innerHTML = "";
-                currentQuestion.options.forEach(option => {
-                    let btn = document.createElement("button");
-                    btn.classList.add("btn");
-                    btn.innerText = option;
-                    btn.onclick = () => checkAnswer(option, currentQuestion.correct);
-                    answersElement.appendChild(btn);
-                });
-            } else {
-                showStats();
-            }
-        }
-
-        function checkAnswer(selected, correct) {
-            if (selected === correct) {
-                correctAnswers++;
-            }
-            questionIndex++;
-            setTimeout(loadQuestion, 500);
-        }
-
-        function showStats() {
-            statsElement.innerHTML = `Ви дали ${correctAnswers} правильних відповідей із ${questions.length}.`;
-            startContainer.style.display = "block";
-            quizContainer.style.display = "none";
-        }
-
-        startButton.addEventListener("click", startQuiz);
-    </script>
     <script src="script.js"></script>
 </body>
 </html>
